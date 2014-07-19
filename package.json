@@ -1,0 +1,23 @@
+{
+  "name": "Tessel-Greenhouse",
+  "version": "0.0.0",
+  "description": "Tessel.io interface for monitoring nd managing your home greenhouse",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ehannum/Tessel-Greenhouse.git"
+  },
+  "keywords": [
+    "tessel.io"
+  ],
+  "author": "Eric Hannum",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ehannum/Tessel-Greenhouse/issues"
+  },
+  "homepage": "https://github.com/ehannum/Tessel-Greenhouse"
+}
