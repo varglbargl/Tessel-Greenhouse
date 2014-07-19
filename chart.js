@@ -1,20 +1,26 @@
 var data = [
-  {temp: 75.5623, date:new Date('Jan 2007')},
-  {temp: 22.7314, date:new Date('Feb 2007')},
-  {temp: 44.7434, date:new Date('Mar 2007')},
-  {temp: 55.7434, date:new Date('Apr 2007')},
-  {temp: 99.7434, date:new Date('May 2007')},
-  {temp: 22.7434, date:new Date('Jun 2007')},
-  {temp: 199.7434, date:new Date('Jul 2007')}
+  {temp: 75.5623, humid:55.6235, date:new Date('Jan 2007 6:00')},
+  {temp: 22.7314, humid:74.6235, date:new Date('Jan 2007 7:00')},
+  {temp: 44.7434, humid:32.6235, date:new Date('Jan 2007 8:00')},
+  {temp: 55.7434, humid:53.6235, date:new Date('Jan 2007 9:00')},
+  {temp: 99.7434, humid:67.6235, date:new Date('Jan 2007 10:00')},
+  {temp: 22.7434, humid:88.6235, date:new Date('Jan 2007 11:00')},
+  {temp: 44.7434, humid:12.6235, date:new Date('Jan 2007 12:00')},
+  {temp: 19.7434, humid:43.6235, date:new Date('Jan 2007 13:00')},
+  {temp: 76.7434, humid:23.6235, date:new Date('Jan 2007 14:00')},
+  {temp: 44.7434, humid:55.6235, date:new Date('Jan 2007 15:00')},
+  {temp: 77.7434, humid:12.6235, date:new Date('Jan 2007 16:00')},
+  {temp: 87.7434, humid:77.6235, date:new Date('Jan 2007 17:00')},
+  {temp: 15.7434, humid:12.6235, date:new Date('Jan 2007 18:00')}
 ];
 
-var yLabel = 'Degrees (F)';
+var yLabel = 'Degrees (F) & Humitidy (%)';
 
 var margin = {top: 80, right: 80, bottom: 80, left: 80},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var parse = d3.time.format("%b %Y").parse;
+var parse = d3.time.format("%I%p").parse;
 
 // Scales and axes. Note the inverted domain for the y-scale: bigger is up!
 var x = d3.time.scale().range([0, width]),
@@ -27,6 +33,11 @@ var line = d3.svg.line()
     .interpolate("monotone")
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.temp); });
+
+var line2 = d3.svg.line()
+    .interpolate("monotone")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.humid); });
 
 // Compute the minimum and maximum date, and the maximum price.
 x.domain([data[0].date, data[data.length - 1].date]);
@@ -47,11 +58,6 @@ svg.append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
-// Add the area path.
-svg.append("path")
-    .attr("class", "area")
-    .attr("clip-path", "url(#clip)");
-
 // Add the x-axis.
 svg.append("g")
     .attr("class", "x axis")
@@ -66,9 +72,14 @@ svg.append("g")
 
 // Add the line path.
 svg.append("path")
+    .attr("stroke", "red")
     .attr("class", "line")
-    .attr("clip-path", "url(#clip)")
     .attr("d", line(data));
+
+svg.append("path")
+    .attr("stroke", "blue")
+    .attr("class", "line")
+    .attr("d", line2(data));
 
 // Add a small label for the symbol name.
 svg.append("text")
